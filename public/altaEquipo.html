@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta de Equipo Médico</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Estilos personalizados -->
+    <style>
+        .navbar {
+            background-color: white !important; /* Color de fondo blanco */
+            box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Sombra ligera en la barra */
+        }
+    
+        .navbar-logo {
+            height: auto; /* Ajusta esto según el tamaño deseado */
+            width: auto; /* Ajusta esto según el tamaño deseado */
+        }
+    
+        .navbar-dark .navbar-nav .nav-link {
+            color: black !important; /* Cambia el color del texto de los enlaces */
+        }
+        .navbar-toggler-icon::before {
+        content: "\2630"; /* Unicode character for the hamburger icon */
+        color: black;
+        font-size: 1.5rem;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,.1);
+            margin-top: 50px;
+        }
+        .form-container h2 {
+            background-color: #ff6600; /* Color de fondo naranja */
+            color: white; /* Color del texto blanco */
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            margin: -30px -30px 30px -30px;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .container-custom {
+        max-width: 900px; /* Ajustar este valor según tus necesidades */
+    }
+    .nav-link {
+            color: #333 !important;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 0;
+            background: #ff6600;
+            transition: width 0.3s ease;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .navbar-nav {
+            margin-left: auto;
+        }
+        .nav-item {
+            margin-right: 10px;
+        }
+        .navbar-brand img {
+            height: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Barra de menú -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <!--<a class="navbar-brand" href="/">Telemedicina 2024-1</a>-->
+  
+  <a class="navbar-brand" href="/inicio.html"><img src="images/logo.jpg" height="80"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+          <li class="nav-item">
+              <a class="nav-link" href="/formulario">Registrar Usuario</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/usuarios">Usuarios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/altaEquipo">Alta Equipo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/subir_bitacora">Subir Bitácora</a>
+        </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/equipos">Consultar Equipo</a>
+          </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item logout">
+                <a class="nav-link" href="/logout">Cerrar Sesión</a>
+            </li>
+      </ul>
+  </div>
+</nav>
+
+<div class="container container-custom">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="form-container">
+                <h2 class="text-center mb-4">Alta de Equipo Médico</h2>
+                <!-- Agregué un div para mostrar mensajes de respuesta -->
+                <div id="response-message"></div>
+                <form id="alta-equipo-form">
+                    <div class="form-group">
+                        <label for="departamento">Departamento</label>
+                        <input type="text" class="form-control" id="departamento" name="departamento" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo_equipo">Tipo de Equipo Médico</label>
+                        <input type="text" class="form-control" id="tipo_equipo" name="tipo_equipo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre_equipo">Marca del Equipo</label>
+                        <input type="text" class="form-control" id="nombre_equipo" name="nombre_equipo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="marca_equipo">Modelo del Equipo</label>
+                        <input type="text" class="form-control" id="marca_equipo" name="marca_equipo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="numero_serie">Numero de serie</label>
+                        <input type="text" class="form-control" id="numero_serie" name="numero_serie" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="codigo">Codigo de Bien</label>
+                      <input type="text" class="form-control" id="codigo" name="codigo" required>
+                  </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Incluir jQuery primero -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Incluir Bootstrap JS (opcional) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Incluir SweetAlert2 para notificaciones -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+ $(document).ready(function() {
+    $('#alta-equipo-form').submit(function(e) {
+        e.preventDefault(); // Evitar el envío por defecto del formulario
+
+        $.ajax({
+            type: "POST",
+            url: "/dar-alta-equipo",
+            data: {
+                departamento: $('#departamento').val(),
+                tipo_equipo: $('#tipo_equipo').val(),
+                nombre_equipo: $('#nombre_equipo').val(),
+                marca_equipo: $('#marca_equipo').val(),
+                numero_serie: $('#numero_serie').val(),
+                codigo: $('#codigo').val(),
+            },
+            success: function(response) {
+                // Mostrar mensaje de éxito usando SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: 'Datos guardados con éxito'
+                });
+                // Opcional: Limpiar el formulario después de enviar los datos
+                $('#alta-equipo-form')[0].reset();
+            },
+            error: function() {
+                // Mostrar mensaje de error usando SweetAlert2
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al guardar los datos'
+                });
+            }
+        });
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(navLink => navLink.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Set active link based on the current URL
+        const currentPath = window.location.pathname;
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

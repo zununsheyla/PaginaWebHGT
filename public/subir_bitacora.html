@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Archivos</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Estilos personalizados -->
+    <style>
+      .navbar {
+        background-color: white !important; /* Color de fondo blanco */
+        box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Sombra ligera en la barra */
+      }
+  
+      .navbar-logo {
+        height: auto; /* Ajusta esto según el tamaño deseado */
+        width: auto; /* Ajusta esto según el tamaño deseado */
+      }
+  
+      .navbar-dark .navbar-nav .nav-link {
+        color: black !important; /* Cambia el color del texto de los enlaces */
+      }
+      .navbar-toggler-icon::before {
+        content: "\2630"; /* Unicode character for the hamburger icon */
+        color: black;
+        font-size: 1.5rem;
+    }
+  
+      body {
+        background-color: #f8f9fa;
+      }
+  
+      .form-container, .table-container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,.1);
+        margin-top: 50px;
+      }
+  
+      .form-container h1, .table-container h2 {
+        background-color: #ff6600; /* Color de fondo naranja */
+        color: white; /* Color del texto blanco */
+        padding: 15px;
+        border-radius: 10px 10px 0 0;
+        margin: -30px -30px 30px -30px;
+        text-align: center;
+      }
+  
+      .file-upload {
+        border: 2px dashed #007bff;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+      }
+  
+      .file-upload input[type="file"] {
+        display: none;
+      }
+  
+      .file-upload:hover {
+        background-color: #f1f1f1;
+      }
+  
+      .file-upload p {
+        margin: 0;
+        color: #007bff;
+      }
+  
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+  
+      .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+      }
+  
+      .card-header {
+        background-color: #ff6600 !important;
+        color: white !important;
+        text-align: center;
+        border-radius: 10px 10px 0 0;
+      }
+  
+      .card {
+        border-radius: 10px;
+      }
+      .nav-link {
+            color: #333 !important;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 0;
+            background: #ff6600;
+            transition: width 0.3s ease;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .navbar-nav {
+            margin-left: auto;
+        }
+        .nav-item {
+            margin-right: 10px;
+        }
+        .navbar-brand img {
+            height: 80px;
+        }
+
+        .nav-link {
+            color: #333 !important;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 0;
+            background: #ff6600;
+            transition: width 0.3s ease;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .navbar-nav {
+            margin-left: auto;
+        }
+        .nav-item {
+            margin-right: 10px;
+        }
+        .navbar-brand img {
+            height: 80px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- Barra de menú -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <!--<a class="navbar-brand" href="/">Telemedicina 2024-1</a>-->
+  
+  <a class="navbar-brand" href="/inicio.html"><img src="images/logo.jpg" height="80"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+          <li class="nav-item active">
+              <a class="nav-link" href="/formulario">Registrar Usuario</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/usuarios">Usuarios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/altaEquipo">Alta Equipo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/subir_bitacora">Subir Bitácora</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/equipos">Consultar Equipo</a>
+          </li>
+        </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item logout">
+                <a class="nav-link" href="/logout">Cerrar Sesión</a>
+            </li>
+      </ul>
+  </div>
+</nav>
+
+
+<div class="container mt-12">
+  <div class="form-container">
+      <h1>Subir Bitácora de Mantenimiento</h1>
+      <form id="formularioSubirBitacora" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="departamento">Departamento:</label>
+      <select class="form-control" id="departamento" name="departamento">
+        <!-- Opciones de departamentos se poblarán dinámicamente -->
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="equipo">Equipo Médico:</label>
+      <select class="form-control" id="equipo" name="equipo">
+        <!-- Opciones de equipos médicos se poblarán dinámicamente -->
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="numSerie">Número de Serie:</label>
+      <select class="form-control" id="numSerie" name="numSerie">
+        <!-- Opciones de nombres se poblarán dinámicamente -->
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="bitacora">Bitácora de Mantenimiento:</label>
+      <div class="file-upload" id="file-upload">
+          <input type="file" id="bitacora" name="bitacora" accept=".pdf" required style="display: none;">
+          <p>Selecciona o arrastra un archivo</p>
+      </div>
+  </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </form>
+</div>
+
+<!-- Incluir jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Incluir Bootstrap JS y dependencias -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Incluir SweetAlert2 para notificaciones -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!-- Script para manejar la subida del archivo y mostrar notificación -->
+<script>
+document.getElementById('formularioSubirBitacora').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevenir recarga de la página
+
+    var formData = new FormData(this);
+
+    fetch('/subir-archivo-medico', {
+      method: 'POST',
+      body: formData
+    }).then(response => {
+      if (response.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: 'Bitácora subida con éxito'
+        });
+      } else {
+        response.text().then(text => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al subir la bitácora: ' + text
+          });
+        });
+      }
+    }).catch(error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al subir la bitácora: ' + error.message
+      });
+    });
+});
+
+
+$(document).ready(function() {
+
+
+
+  $.ajax({
+    url: '/equipos-medicos',
+    method: 'GET',
+    success: function(data) {
+
+      //$('#departamento').empty();
+      //$('#equipo').empty();
+      //$('#numSerie').empty();
+      $('#departamento').empty().append('<option value="" disabled selected>Seleccionar</option>');
+      $('#equipo').empty().append('<option value="" disabled selected>Seleccionar</option>');
+      $('#numSerie').empty().append('<option value="" disabled selected>Seleccionar</option>');
+
+
+      // Populate department dropdown
+      Object.keys(data).forEach(dept => {
+        $('#departamento').append(new Option(dept, dept));
+      });
+
+      // Department change event
+      $('#departamento').change(function() {
+        var selectedDept = $(this).val();
+        $('#equipo').empty();
+        $('#numSerie').empty();
+
+        $('#equipo').append(new Option('Seleccionar', ''));
+
+        // Populate equipment dropdown based on selected department
+        Object.keys(data[selectedDept]).forEach(equipo => {
+          $('#equipo').append(new Option(equipo, equipo));
+        });
+
+        // Trigger equipment change event to load series numbers
+        $('#equipo').trigger('change');
+      });
+
+      // Equipment change event
+      $('#equipo').change(function() {
+        var selectedDept = $('#departamento').val();
+        var selectedEquip = $(this).val();
+        $('#numSerie').empty();
+        $('#numSerie').append(new Option('Seleccionar', '')); // Opción predeterminada
+
+        // Populate series number dropdown
+        if(data[selectedDept] && data[selectedDept][selectedEquip]) 
+        {
+        data[selectedDept][selectedEquip].forEach(serie => 
+        {
+          $('#numSerie').append(new Option(serie, serie));
+        });
+        }
+      });
+
+      // Trigger the first change to populate all fields
+      //$('#departamento').trigger('change');
+    },
+    error: function(error) {
+      console.error('Error loading data:', error);
+    }
+  });
+
+
+});
+
+/////////////////////////////////////////////////////////////////////
+
+const fileUpload = document.getElementById('file-upload');
+  const fileInput = document.getElementById('bitacora');
+
+  fileUpload.addEventListener('click', () => fileInput.click());
+
+  fileUpload.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      fileUpload.classList.add('dragover');
+  });
+
+  fileUpload.addEventListener('dragleave', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      fileUpload.classList.remove('dragover');
+  });
+
+  fileUpload.addEventListener('drop', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      fileUpload.classList.remove('dragover');
+      const files = event.dataTransfer.files;
+      if (files.length > 0) {
+          fileInput.files = files;
+          updateFileName(files[0].name);
+      }
+  });
+
+  fileInput.addEventListener('change', (event) => {
+      const files = event.target.files;
+      if (files.length > 0) {
+          updateFileName(files[0].name);
+      }
+  });
+
+  function updateFileName(fileName) {
+      fileUpload.querySelector('p').textContent = fileName;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(navLink => navLink.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Set active link based on the current URL
+        const currentPath = window.location.pathname;
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

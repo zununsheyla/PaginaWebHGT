@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios Registrados</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar {
+            background-color: white !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+
+        .navbar-logo {
+            height: auto;
+            width: auto;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: black !important;
+        }
+        .navbar-toggler-icon::before {
+        content: "\2630"; /* Unicode character for the hamburger icon */
+        color: black;
+        font-size: 1.5rem;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .table-container {
+            width: 90%; /* Ajusta el ancho de la tabla aquí */
+            margin: 0 auto; /* Centrar la tabla */
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,.1);
+            margin-top: 50px;
+        }
+
+        .table-container h2 {
+            background-color: #ff6600; /* Color de fondo naranja */
+            color: white; /* Color del texto blanco */
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            margin: -30px -30px 30px -30px;
+            text-align: center;
+        }
+
+        .thead-orange {
+            background-color: #7c7c7c;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .nav-link {
+            color: #333 !important;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 0;
+            background: #ff6600;
+            transition: width 0.3s ease;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .navbar-nav {
+            margin-left: auto;
+        }
+        .nav-item {
+            margin-right: 10px;
+        }
+        .navbar-brand img {
+            height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/inicio.html"><img src="images/logo.jpg" height="80"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/formulario">Registrar Usuario</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/usuarios">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/altaEquipo">Alta Equipo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/subir_bitacora">Subir Bitácora</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/equipos">Consultar Equipo</a>
+                </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item logout">
+                        <a class="nav-link" href="/logout">Cerrar Sesión</a>
+                    </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="table-container">
+        <h2>Usuarios Registrados</h2>
+        <div class="table-reponsive">
+            <table class="table table-striped">
+                <thead class="thead-gray">
+                    <tr>
+                        <th scope="col">Rol</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Contraseña</th>
+                        <th scope="col">Acciones</th>
+                        
+                    </tr>
+                </thead>
+                <tbody id="tablaUsuarios">
+                    <!-- Los datos de los usuarios se insertarán aquí -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        fetch('/consultar')
+            .then(response => response.json())
+            .then(data => {
+                const tabla = document.getElementById('tablaUsuarios');
+                data.forEach(usuario => {
+                    const fila = tabla.insertRow();
+                    const celdaRol = fila.insertCell();
+                    const celdaNombre = fila.insertCell();
+                    const celdaCorreo = fila.insertCell();
+                    const celdaContraseña = fila.insertCell();
+                    const celdaAcciones = fila.insertCell();
+                    
+                    celdaRol.textContent = usuario.rol;
+                    celdaNombre.textContent = usuario.nombre;
+                    celdaCorreo.textContent = usuario.correo;
+                    
+
+                    const passwordContainer = document.createElement('div');
+                    passwordContainer.classList.add('d-flex', 'align-items-center');
+
+                    const passwordField = document.createElement('input');
+                    passwordField.type = 'password';
+                    passwordField.classList.add('form-control','mr-2');
+                    passwordField.value = usuario.contraseña;
+                    passwordField.readOnly = true;
+                    passwordField.style.width = '200px';
+
+                    const toggleButton = document.createElement('button');
+                    toggleButton.classList.add('btn', 'btn-secondary', 'btn-sm');
+                    toggleButton.textContent = 'Mostrar';
+
+                    toggleButton.addEventListener('click', function () {
+                        if (passwordField.type === 'password') {
+                            passwordField.type = 'text';
+                            toggleButton.textContent = 'Ocultar';
+                        } else {
+                            passwordField.type = 'password';
+                            toggleButton.textContent = 'Mostrar';
+                        }
+                    });
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+                    deleteButton.textContent = 'Eliminar';
+
+                    deleteButton.addEventListener('click', function () {
+                        if (confirm('¿Estás seguro de eliminar este usuario?')) {
+                            fetch('/eliminar-usuario', {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ id: usuario.id }) // Enviando el id en el cuerpo de la solicitud
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    alert('Usuario eliminado exitosamente');
+                                    fila.remove();
+                                } else {
+                                    alert('Error al eliminar el usuario');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error al eliminar el usuario:', error);
+                                alert('Error al eliminar el usuario');
+                            });
+                        }
+                    });
+
+
+                    passwordContainer.appendChild(passwordField);
+                    passwordContainer.appendChild(toggleButton);
+                    celdaContraseña.appendChild(passwordContainer);
+                    celdaAcciones.appendChild(deleteButton);
+                });
+            })
+            .catch(error => console.error('Error al cargar los usuarios:', error));
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(navLink => navLink.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Set active link based on the current URL
+        const currentPath = window.location.pathname;
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    });
+    </script>
+</body>
+</html>
